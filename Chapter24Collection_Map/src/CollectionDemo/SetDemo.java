@@ -2,9 +2,7 @@ package CollectionDemo;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author : liulinzhi
@@ -63,22 +61,53 @@ import java.util.Set;
     其他的Object就有hashCode和equals方法；
  */
 
-/*
+/*5.LinkedHashSet：
+
  */
+
+/*6.TreeSet：
+    1.TreeSet添加的数据要求相同类的对象；
+    2.两种排序方式：自然排序和定制排序
+    3.比较相同用的是该类的compareTo方法是否返回0
+    不再是equals方法；
+    4.定制排序：new TreeSet(Comparaor c）
+
+        */
 public class SetDemo {
     @Test
     public void test1(){
-        HashSet set = new HashSet();
-        set.add("a");
-        set.add(true);
-        set.add(new String("Tom"));
-        set.add("d");
-        set.add(new Person("jerry", 20));
+        //定制排序：new TreeSet(Comparaor c）
+        TreeSet set = new TreeSet(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                if(o1 instanceof Person && o2 instanceof Person)
+                {
+                    Person p1 = (Person)o1;
+                    Person p2 = (Person)o2;
+                    return p1.compareTo(p2);
+                }
+                else
+                    throw new RuntimeException("输入类型不对");
+            }
+        });
+        //重写comparable接口的compareTo方法
+        set.add(new Person("Ton", 12));
+        set.add(new Person("jerry", 32));
+        set.add(new Person("Jim", 2));
+        set.add(new Person("Jim", 22));
+        set.add(new Person("Mike", 65));
+        set.add(new Person("Coder", 65));
+        //出错，只能添加相同类的对象
+//        set.add(true);
+//        set.add(new String("Tom"));
+//        set.add("d");
+//        set.add(new Person("jerry", 20));
+//        set.add(new Person("jerry", 20));
 
         Iterator it = set.iterator();
         while(it.hasNext())
             System.out.println(it.next());
-        //无序的
+        //按add顺序输出
 
 
 

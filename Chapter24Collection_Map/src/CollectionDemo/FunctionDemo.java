@@ -15,12 +15,21 @@ Collection接口的常用方法：
 
 
 */
-class Person{
+class Person implements Comparable{
     private String name;
     private int age;
 
     public Person(){
 
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Person o2 = (Person)o;
+        if(this.getAge() != o2.getAge())
+            return (this.getAge() - o2.getAge());
+        else
+            return this.getName().compareTo(((Person) o).getName());
     }
 
     @Override
